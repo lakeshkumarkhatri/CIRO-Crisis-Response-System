@@ -1,4 +1,5 @@
 import google.generativeai as genai
+import os
 import json
 import re
 from app.models import MultiSourceInput, CrisisDetection, ActionPlan
@@ -98,7 +99,9 @@ Return JSON: {{"actions": ["action1", "action2"], "details": {{"action1": "why c
 class AgentOrchestrator:
     def __init__(self, api_key: str):
         genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel('models/gemini-3.1-flash-lite')
+        model_name = os.getenv("MODEL_NAME")
+        self.model = genai.GenerativeModel(model_name)
+        
         self.trace = TraceLogger()
         self.detector = CrisisDetectorAgent(self.model)
         self.impact_analyzer = ImpactAnalyzerAgent(self.model)
