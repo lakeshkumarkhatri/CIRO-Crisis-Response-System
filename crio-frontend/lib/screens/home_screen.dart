@@ -28,11 +28,12 @@ class _HomeScreenState extends State<HomeScreen> {
     };
 
     try {
-      final backendUrl = kIsWeb
-          ? "http://localhost:8000/analyze"
-          : "http://10.0.2.2:8000/analyze";
+      final Uri backendUrl = Uri.https(
+        "ciro-backend-567764676198.us-central1.run.app",
+        "/analyze",
+      );
       final response = await http.post(
-        Uri.parse(backendUrl),
+        backendUrl,
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(requestBody),
       );
@@ -96,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
             const Text(
-              "Live Map (mock - will be upgraded with Google Maps)",
+              "Live Map ",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 8),
